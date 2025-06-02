@@ -11,6 +11,10 @@ public class AccountService {
     private final AccountJpaRepository accountRepository;
 
     public void create(AccountCreateReq req) {
+        if(accountRepository.existsByEmail(req.email())) {
+            throw new IllegalArgumentException("이미 가입한 이메일입니다.");
+        }
+
         accountRepository.save(
                 AccountEntity.builder()
                         .email(req.email())
