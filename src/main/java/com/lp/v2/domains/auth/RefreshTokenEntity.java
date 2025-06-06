@@ -1,4 +1,4 @@
-package com.lp.v2.security;
+package com.lp.v2.domains.auth;
 
 import com.lp.v2.common.Auditable;
 import jakarta.persistence.*;
