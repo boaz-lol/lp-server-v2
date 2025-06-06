@@ -1,0 +1,39 @@
+package com.lp.v2.domains.account;
+
+import com.lp.v2.security.PasswordService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class AccountService {
+    private final AccountJpaRepository accountRepository;
+    private final PasswordService passwordService;
+
+    public void create(AccountCreateReq req) {
+        if (accountRepository.existsByEmail(req.email())) {
+            throw new IllegalArgumentException("이미 가입한 이메일입니다.");
+        }
+
+        accountRepository.save(
+                AccountEntity.builder()
+                        .email(req.email())
+                        .password(passwordService.encodePassword(req.password()))
+                        .username(req.username())
+                        .build()
+        );
+    }
+
+    public Long getByEmailAndPassword(String email, String password) {
+        AccountEntity account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
+
+        if (!passwordService.verifyPassword(password, account.getPassword())) {
+            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
+        }
+
+        return account.getId();
+    }
+}
