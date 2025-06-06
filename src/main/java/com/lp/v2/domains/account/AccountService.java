@@ -26,6 +26,7 @@ public class AccountService {
         );
     }
 
+    @Transactional(readOnly = true)
     public Long getByEmailAndPassword(String email, String password) {
         AccountEntity account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
@@ -37,6 +38,7 @@ public class AccountService {
         return account.getId();
     }
 
+    @Transactional(readOnly = true)
     public AccountInfoRes getInfo(Long accountId) {
         AccountEntity account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
@@ -44,6 +46,7 @@ public class AccountService {
         return AccountInfoRes.fromEntity(account);
     }
 
+    @Transactional(readOnly = true)
     public void verifyPassword(Long accountId, String password) {
         AccountEntity account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
