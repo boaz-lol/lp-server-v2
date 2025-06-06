@@ -1,7 +1,6 @@
 package com.lp.v2.domains.auth.service;
 
 import com.lp.v2.domains.account.AccountService;
-import com.lp.v2.domains.auth.core.RefreshTokenEntity;
 import com.lp.v2.domains.auth.dto.AuthLogInReq;
 import com.lp.v2.domains.auth.dto.TokenPair;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class AuthService {
     public TokenPair logIn(AuthLogInReq req) {
         Long accountId = accountService.getByEmailAndPassword(req.email(), req.password());
         TokenPair tokenPair = jwtService.create(accountId);
-        refreshTokenService.create(tokenPair.getRefreshToken(), accountId);
+        refreshTokenService.create(tokenPair.refreshToken(), accountId);
         return tokenPair;
     }
 

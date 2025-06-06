@@ -23,7 +23,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthLogInRes> logIn (@RequestBody AuthLogInReq req) {
         TokenPair tokenPair = authService.logIn(req);
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenPair.getRefreshToken())
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenPair.refreshToken())
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
@@ -33,7 +34,7 @@ public class AuthController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(AuthLogInRes.of(tokenPair.getAccessToken()));
+                .body(AuthLogInRes.of(tokenPair.accessToken()));
     }
 
 }

@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class JwtService {
     private final JwtProvider jwtProvider;
+    private static final String BEARER_PREFIX = "Bearer ";
 
     TokenPair create(Long accountId) {
         return new TokenPair (
-                jwtProvider.createAccessToken(accountId.toString()),
+                BEARER_PREFIX + jwtProvider.createAccessToken(accountId.toString()),
                 jwtProvider.createRefreshToken(accountId.toString())
         );
     }
