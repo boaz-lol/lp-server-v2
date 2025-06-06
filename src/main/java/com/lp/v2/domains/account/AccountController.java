@@ -49,4 +49,12 @@ public class AccountController {
         );
     }
 
+    @DeleteMapping("/me")
+    public ResponseEntity<BaseResponse> deleteMyAccount(@CurrentAccountId Long accountId) {
+        accountService.delete(accountId);
+        return ResponseEntity.ok(
+                BaseResponse.success(ResponseMessage.ACCOUNT_DELETE_SUCCESS)
+        );
+    }
+
 }

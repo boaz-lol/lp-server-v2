@@ -73,4 +73,12 @@ public class AccountService {
 
         accountRepository.save(account);
     }
+
+    public void delete(Long accountId) {
+        AccountEntity account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
+
+        account.delete();
+        accountRepository.save(account);
+    }
 }
