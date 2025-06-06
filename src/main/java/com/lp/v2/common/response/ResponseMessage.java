@@ -31,7 +31,8 @@ public enum ResponseMessage {
     TOKEN_EXPIRED("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     TOKEN_INVALID("유효하지 않은 토큰입니다.", HttpStatus.UNAUTHORIZED),
     TOKEN_REFRESH_SUCCESS("토큰 갱신이 완료되었습니다.", HttpStatus.OK),
-    INVALID_CREDENTIALS("잘못된 인증 정보입니다.", HttpStatus.UNAUTHORIZED);
+    INVALID_CREDENTIALS("잘못된 인증 정보입니다.", HttpStatus.UNAUTHORIZED),
+    PASSWORD_VERIFICATION_SUCCESS("비밀번호 인증이 완료되었습니다.", HttpStatus.OK);
 
     private final String message;
     private final HttpStatus httpStatus;

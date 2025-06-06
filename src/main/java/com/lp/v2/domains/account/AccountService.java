@@ -43,4 +43,13 @@ public class AccountService {
 
         return AccountInfoRes.fromEntity(account);
     }
+
+    public void verifyPassword(Long accountId, String password) {
+        AccountEntity account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
+
+        if (!passwordService.verifyPassword(password, account.getPassword())) {
+            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
+        }
+    }
 }

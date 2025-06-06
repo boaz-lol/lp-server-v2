@@ -27,4 +27,15 @@ public class AccountController {
         return ResponseEntity.ok().body(accountService.getInfo(accountId));
     }
 
+    @PostMapping("/verify")
+    public ResponseEntity<BaseResponse> verifyPassword(
+            @CurrentAccountId Long accountId,
+            @RequestBody PasswordVerifyReq req
+    ) {
+        accountService.verifyPassword(accountId, req.password());
+        return ResponseEntity.ok(
+                BaseResponse.success(ResponseMessage.PASSWORD_VERIFICATION_SUCCESS)
+        );
+    }
+
 }
