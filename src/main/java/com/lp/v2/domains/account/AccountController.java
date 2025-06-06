@@ -38,4 +38,15 @@ public class AccountController {
         );
     }
 
+    @PutMapping("/me")
+    public ResponseEntity<BaseResponse> updateMyInfo(
+            @CurrentAccountId Long accountId,
+            @RequestBody AccountUpdateReq req
+    ) {
+        accountService.update(accountId, req);
+        return ResponseEntity.ok(
+                BaseResponse.success(ResponseMessage.ACCOUNT_UPDATE_SUCCESS)
+        );
+    }
+
 }

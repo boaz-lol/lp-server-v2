@@ -52,4 +52,22 @@ public class AccountService {
             throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
         }
     }
+
+    public void update(Long accountId, AccountUpdateReq req) {
+        AccountEntity account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
+
+        if (req.username() != null) {
+            account.updateUsername(req.username());
+        }
+
+        if (req.existingPassword() != null && req.newPassword() != null) {
+            if (!passwordService.verifyPassword(req.existingPassword(), account.getPassword())) {
+                throw new IllegalArgumentException("기존 패스워드가 일치하지 않습니다.");
+            }
+            account.updatePassword(passwordService.encodePassword(req.newPassword()));
+        }
+
+        accountRepository.save(account);
+    }
 }
