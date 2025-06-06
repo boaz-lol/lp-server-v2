@@ -36,4 +36,11 @@ public class AccountService {
 
         return account.getId();
     }
+
+    public AccountInfoRes getInfo(Long accountId) {
+        AccountEntity account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("계정을 찾을 수 없습니다."));
+
+        return AccountInfoRes.fromEntity(account);
+    }
 }
