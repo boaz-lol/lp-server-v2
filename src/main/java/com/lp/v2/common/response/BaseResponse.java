@@ -3,6 +3,7 @@ package com.lp.v2.common.response;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
@@ -30,6 +31,15 @@ public class BaseResponse {
                 .message(responseMessage.getMessage())
                 .timestamp(Instant.now().toString())
                 .status(responseMessage.getStatusCode())
+                .build();
+    }
+
+    public static BaseResponse fail(String message) {
+        return BaseResponse.builder()
+                .success(false)
+                .message(message)
+                .timestamp(Instant.now().toString())
+                .status(HttpStatus.UNAUTHORIZED.value())
                 .build();
     }
 }
