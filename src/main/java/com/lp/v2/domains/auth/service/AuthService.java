@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final AccountService accountService;
-    private final JwtService jwtService;
+    private final JwtAuthService jwtAuthService;
     private final RefreshTokenService refreshTokenService;
 
     public TokenPair logIn(AuthLogInReq req) {
         Long accountId = accountService.getByEmailAndPassword(req.email(), req.password());
-        TokenPair tokenPair = jwtService.create(accountId);
+        TokenPair tokenPair = jwtAuthService.create(accountId);
         refreshTokenService.create(tokenPair.refreshToken(), accountId);
         return tokenPair;
     }
@@ -32,7 +32,7 @@ public class AuthService {
         Long accountId = refreshTokenService.getAccountIdFromToken(refreshToken);
 
         // 새로운 토큰 쌍 생성
-        TokenPair newTokenPair = jwtService.create(accountId);
+        TokenPair newTokenPair = jwtAuthService.create(accountId);
 
         // 기존 refresh token 삭제하고 새로운 refresh token 저장
         refreshTokenService.deleteByToken(refreshToken);
