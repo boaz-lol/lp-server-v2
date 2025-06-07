@@ -23,4 +23,22 @@ public class AuthService {
         return tokenPair;
     }
 
+
+    public TokenPair reissueTokens(String refreshToken) {
+        // refresh token 유효성 검증
+        refreshTokenService.validateRefreshToken(refreshToken);
+
+        // refresh token에서 사용자 정보 추출
+        Long accountId = refreshTokenService.getAccountIdFromToken(refreshToken);
+
+        // 새로운 토큰 쌍 생성
+        TokenPair newTokenPair = jwtService.create(accountId);
+
+        // 기존 refresh token 삭제하고 새로운 refresh token 저장
+        refreshTokenService.deleteByToken(refreshToken);
+        refreshTokenService.create(newTokenPair.refreshToken(), accountId);
+
+        return newTokenPair;
+    }
+
 }
