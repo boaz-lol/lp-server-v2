@@ -1,5 +1,6 @@
 package com.lp.v2.exception;
 
+import com.lp.v2.common.response.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,17 +13,28 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> handleIllegalArgument(
+    public ResponseEntity<BaseResponse> handleIllegalArgument(
             IllegalArgumentException ex, WebRequest request) {
-
-        Map<String, Object> body = Map.of(
-                "timestamp", Instant.now().toString(),
-                "status", HttpStatus.CONFLICT.value(),
-                "error", "Conflict",
-                "message", ex.getMessage(),
-                "path", request.getDescription(false).replace("uri=", "")
-        );
-
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        BaseResponse response = BaseResponse.builder()
+                .success(false)
+                .message(ex.getMessage())
+                .timestamp(Instant.now().toString())
+                .status(HttpStatus.CONFLICT.value())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(response);
     }
+
+    @ExceptionHandler({
+            UnauthenticatedException.class,
+            InvalidTokenException.class,
+            ExpiredTokenException.class
+    })
+    public ResponseEntity<BaseResponse> handleAuthExceptions(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(BaseResponse.fail(ex.getMessage()));
+    }
+
 }
