@@ -3,8 +3,8 @@ name: LP Deploy to HS
 on:
   push:
     branches: [develop]
-    paths:
-      - 'src/**'
+#    paths:
+#      - 'src/**'
 
 jobs:
   deploy:
@@ -14,14 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --no-daemon -x test
+
       - name: Set SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Rsync files
+      - name: Rsync files to server
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.USER }}@${{ secrets.HOST }}:~/lp
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.USER }}@${{ secrets.HOST }}:~/lp/
 
       - name: Run compose
         run: |
