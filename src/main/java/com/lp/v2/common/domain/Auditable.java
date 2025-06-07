@@ -1,4 +1,4 @@
-package com.lp.v2.common;
+package com.lp.v2.common.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
