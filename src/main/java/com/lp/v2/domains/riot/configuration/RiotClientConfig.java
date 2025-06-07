@@ -1,4 +1,4 @@
-package com.lp.v2.configuration;
+package com.lp.v2.domains.riot.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

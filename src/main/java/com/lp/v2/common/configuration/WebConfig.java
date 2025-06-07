@@ -1,4 +1,4 @@
-package com.lp.v2.configuration;
+package com.lp.v2.common.configuration;
 
 import com.lp.v2.security.resolver.CurrentAccountIdArgumentResolver;
 import org.springframework.context.annotation.Configuration;
