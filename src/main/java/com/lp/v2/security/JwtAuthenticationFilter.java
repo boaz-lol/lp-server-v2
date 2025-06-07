@@ -1,6 +1,6 @@
 package com.lp.v2.security;
 
-import com.lp.v2.security.jwt.JwtProvider;
+import com.lp.v2.security.jwt.JwtManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
 
     @Override
     protected void doFilterInternal(
@@ -34,8 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             token = header.substring(7);
         }
 
-        if (token != null && jwtProvider.validateToken(token)) {
-            String accountId = jwtProvider.getSubject(token);
+        if (token != null && jwtManager.validateToken(token)) {
+            String accountId = jwtManager.getSubject(token);
 
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(

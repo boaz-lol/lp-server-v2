@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLogInRes {
+public class AccessTokenRes {
     private String accessToken;
     private String tokenType;
 
-    public static AuthLogInRes of(String accessToken) {
-        return AuthLogInRes.builder()
+    public static AccessTokenRes of(String accessToken) {
+        return AccessTokenRes.builder()
                 .accessToken(accessToken)
                 .tokenType("Bearer")
                 .build();

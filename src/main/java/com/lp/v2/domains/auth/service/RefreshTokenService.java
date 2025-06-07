@@ -18,4 +18,21 @@ class RefreshTokenService {
                         .build()
         );
     }
+
+    void validateRefreshToken(String token) {
+        RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 refresh token입니다."));
+
+    }
+
+    Long getAccountIdFromToken(String token) {
+        RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 refresh token입니다."));
+        return refreshToken.getAccountId();
+    }
+
+    void deleteByToken(String token) {
+        refreshTokenRepository.deleteByToken(token);
+    }
+
 }
