@@ -15,8 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    @Value("${spring.security.jwt.secret}")
-    private String secretKeyString;
+    private final JwtKeyFactory jwtKeyFactory;
 
     @Value("${spring.security.jwt.access-expiration-ms}")
     private long accessExpirationTime;
@@ -24,13 +23,6 @@ public class JwtProvider {
     @Value("${spring.security.jwt.refresh-expiration-ms}")
     private long refreshExpirationTime;
 
-    private Key secretKey;
-
-    @PostConstruct
-    public void init() {
-        byte[] keyBytes = secretKeyString.getBytes();
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
-    }
 
     public String createAccessToken(String subject) {
         Date now = new Date();
@@ -40,7 +32,7 @@ public class JwtProvider {
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .signWith(jwtKeyFactory.getSecretKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -52,7 +44,7 @@ public class JwtProvider {
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .signWith(jwtKeyFactory.getSecretKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -79,7 +71,7 @@ public class JwtProvider {
 
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(jwtKeyFactory.getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
