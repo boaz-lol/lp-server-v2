@@ -53,7 +53,7 @@ public class AuthController {
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
-                .maxAge(604800000)
+                .maxAge(Duration.ofDays(7).getSeconds())
                 .sameSite("Lax")
                 .build();
 
