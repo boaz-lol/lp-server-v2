@@ -1,13 +1,11 @@
 package com.lp.v2.domains.auth.core;
 
-import com.lp.v2.common.Auditable;
+import com.lp.v2.common.domain.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table

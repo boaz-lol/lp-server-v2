@@ -1,6 +1,6 @@
 package com.lp.v2.domains.account;
 
-import com.lp.v2.common.Auditable;
+import com.lp.v2.common.domain.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
