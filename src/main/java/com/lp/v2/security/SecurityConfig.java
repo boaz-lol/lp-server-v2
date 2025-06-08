@@ -61,6 +61,7 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                // TODO("Consider adding more authenticated end points")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/accounts/signup").permitAll()
                         .requestMatchers("/api/accounts/me").authenticated()
