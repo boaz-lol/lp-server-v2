@@ -29,7 +29,7 @@ public class AuthService {
         refreshTokenService.validateRefreshToken(refreshToken);
 
         // refresh token에서 사용자 정보 추출
-        Long accountId = refreshTokenService.getAccountIdFromToken(refreshToken);
+        Long accountId = jwtAuthService.getAccountIdFromToken(refreshToken);
 
         // 새로운 토큰 쌍 생성
         TokenPair newTokenPair = jwtAuthService.create(accountId);
