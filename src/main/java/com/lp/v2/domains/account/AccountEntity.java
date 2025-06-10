@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@Table
+@Table(name = "accounts",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_accounts_email", columnNames = "email")
+        }
+)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLRestriction("is_deleted = false")
