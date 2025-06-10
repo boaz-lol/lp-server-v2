@@ -16,7 +16,7 @@ import java.time.Instant;
 public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return !returnType.getParameterType().equals(ApiResponse.class);
+        return !returnType.getParameterType().equals(SuccessResponse.class);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
             actualStatus = ResponseMessage.SUCCESS.getStatusCode();
         }
 
-        return ApiResponse.<Object>builder()
+        return SuccessResponse.<Object>builder()
                 .success(true)
                 .message(ResponseMessage.SUCCESS.getMessage())
                 .status(actualStatus)
