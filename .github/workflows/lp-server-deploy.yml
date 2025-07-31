@@ -20,6 +20,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Create resources folder
+        run: mkdir -p ./src/main/resources
+
+      - name: Inject application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
+
       - name: Grant execute permission
         run: chmod +x ./gradlew
 
@@ -33,11 +40,11 @@ jobs:
 
       - name: Rsync files to server
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.USER }}@${{ secrets.HOST }}:~/lp/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.HOME_SERVER_USER }}@${{ secrets.HOME_SERVER_HOST }}:~/lp/
 
       - name: Run compose
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} "
+          ssh -o StrictHostKeyChecking=no ${{ secrets.HOME_SERVER_USER }}@${{ secrets.HOME_SERVERHOST }} "
             cd ~/lp &&
             docker compose down &&
             docker compose up -d --build
