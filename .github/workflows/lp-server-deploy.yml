@@ -44,7 +44,7 @@ jobs:
 
       - name: Run compose
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.HOME_SERVER_USER }}@${{ secrets.HOME_SERVERHOST }} "
+          ssh -o StrictHostKeyChecking=no ${{ secrets.HOME_SERVER_USER }}@${{ secrets.HOME_SERVER_HOST }} "
             cd ~/lp &&
             docker compose down &&
             docker compose up -d --build
