@@ -19,6 +19,13 @@ subprojects {
 	apply(plugin = "org.jetbrains.kotlin.jvm")
 	apply(plugin = "io.spring.dependency-management")
 
+	// Import Spring Boot BOM for dependency management
+	configure<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension> {
+		imports {
+			mavenBom("org.springframework.boot:spring-boot-dependencies:4.0.2")
+		}
+	}
+
 	dependencies {
 		// Common dependencies for all Kotlin modules
 		"implementation"("org.jetbrains.kotlin:kotlin-reflect")
