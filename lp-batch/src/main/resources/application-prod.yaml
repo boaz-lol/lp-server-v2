@@ -1,0 +1,36 @@
+# Production profile (MySQL)
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:mysql}:${DB_PORT:3306}/${DB_NAME:lol_match}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:password}
+
+    # Connection pool settings (HikariCP)
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: validate  # Don't auto-create tables in production
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        default_batch_fetch_size: 100
+
+  # MySQL initialization
+  sql:
+    init:
+      mode: never  # Use Flyway or manual migration in production
+
+logging:
+  level:
+    com.boaz.lp: INFO
+    org.hibernate.SQL: WARN

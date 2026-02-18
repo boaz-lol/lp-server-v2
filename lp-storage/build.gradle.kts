@@ -26,7 +26,7 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j:8.3.0") // For prod profile
 
 	// Hibernate SQLite dialect
-	implementation("org.hibernate.orm:hibernate-community-dialects:6.4.4")
+	implementation("org.hibernate.orm:hibernate-community-dialects")
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
