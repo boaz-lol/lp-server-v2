@@ -1,2 +1,26 @@
-
+### JetBrains IDE (IntelliJ IDEA) ###
 .idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/resources/
+!**/src/test/resources/
+
+### Build Tools (Gradle) ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+### Operating System ###
+.DS_Store
+Thumbs.db
+
+### Application Secrets & Logs ###
+*.log
+.env
+src/main/resources/application-*.properties
+src/main/resources/application-*.yml
+!src/main/resources/application.yml
+!src/main/resources/application.properties
