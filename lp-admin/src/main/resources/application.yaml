@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: lp-admin
+  profiles:
+    active: local
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
+# Admin credentials (will be overridden by environment variables)
+admin:
+  username: admin
+  password: admin123

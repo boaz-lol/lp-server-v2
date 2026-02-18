@@ -1,0 +1,34 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: lp-batch
+  profiles:
+    active: local
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false  # Don't run jobs on startup automatically
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
+# Python model URL (will be overridden in Docker)
+python:
+  model:
+    url: http://localhost:5000
