@@ -18,6 +18,9 @@ dependencies {
 	implementation(project(":lp-common"))
 	implementation(project(":lp-storage"))
 
+	// Spring Data JPA (needed for repository access)
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
 	// Spring Batch
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 
