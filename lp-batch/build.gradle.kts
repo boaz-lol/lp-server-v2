@@ -47,3 +47,18 @@ tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 tasks.named<Jar>("jar") {
 	enabled = false
 }
+
+// Load .env file for bootRun
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+	doFirst {
+		val envFile = rootProject.file(".env")
+		if (envFile.exists()) {
+			envFile.readLines()
+				.filter { it.isNotBlank() && !it.startsWith("#") && it.contains("=") }
+				.forEach { line ->
+					val (key, value) = line.split("=", limit = 2)
+					environment(key.trim(), value.trim())
+				}
+		}
+	}
+}

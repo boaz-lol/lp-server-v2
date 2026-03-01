@@ -20,6 +20,10 @@ spring:
     init:
       mode: never  # Don't run schema.sql (using JPA auto-ddl)
 
+  # SQLite doesn't support Quartz JDBC store
+  quartz:
+    job-store-type: memory
+
 logging:
   level:
     com.boaz.lp: DEBUG
