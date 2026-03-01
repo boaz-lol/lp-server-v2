@@ -27,6 +27,14 @@ class RankCollectionTasklet(
 
         summoners.forEach { summoner ->
             try {
+                // PUUID is 78 chars; encrypted summoner IDs are shorter.
+                // If summonerId looks like a PUUID, league-v4 will fail.
+                if (summoner.summonerId == summoner.puuid) {
+                    log.warn("Skipping rank collection for ${summoner.gameName}#${summoner.tagLine}: " +
+                            "summonerId is a PUUID fallback (encrypted summoner ID not available from API)")
+                    return@forEach
+                }
+
                 val entries = riotApiClient.getLeagueEntries(summoner.summonerId, summoner.region)
 
                 entries.forEach { entry ->

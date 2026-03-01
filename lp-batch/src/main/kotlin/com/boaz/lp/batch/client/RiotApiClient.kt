@@ -30,7 +30,21 @@ class RiotApiClient(
         rateLimiter.acquire()
         val baseUrl = String.format(Constants.RiotApi.PLATFORM_URL_FORMAT, region.platformId.lowercase())
         val url = "$baseUrl/lol/summoner/v4/summoners/by-puuid/$puuid"
-        return executeGet(url, RiotSummonerDto::class.java)
+
+        // Fetch raw response first to diagnose missing 'id' field
+        val rawBody = riotApiWebClient.get()
+            .uri(url)
+            .retrieve()
+            .bodyToMono(String::class.java)
+            .block()
+        log.debug("Summoner API raw response: {}", rawBody)
+
+        val mapper = com.fasterxml.jackson.module.kotlin.jacksonObjectMapper()
+        val result = mapper.readValue(rawBody, RiotSummonerDto::class.java)
+        if (result.id == null) {
+            log.warn("Summoner API returned null 'id' for puuid={}. Raw: {}. Rank collection will be skipped.", puuid, rawBody)
+        }
+        return result
     }
 
     fun getMatchIds(puuid: String, start: Int = 0, count: Int = 20, startTime: Long? = null): List<String> {
