@@ -16,6 +16,21 @@ spring:
       initialize-schema: always
     job:
       enabled: false  # Don't run jobs on startup automatically
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    properties:
+      org.quartz.scheduler.instanceName: lp-batch-scheduler
+      org.quartz.scheduler.instanceId: AUTO
+      org.quartz.threadPool.threadCount: 3
+
+riot:
+  api:
+    key: ${RIOT_API_KEY:}
+    rate-limit-per-second: 20
+    rate-limit-per-2-minutes: 100
+    retry-max-attempts: 3
 
 management:
   endpoints:

@@ -18,6 +18,9 @@ dependencies {
 	implementation(project(":lp-common"))
 	implementation(project(":lp-storage"))
 
+	// Spring Data JPA (needed for repository access)
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
 	// Spring Batch
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 
@@ -43,4 +46,19 @@ tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 
 tasks.named<Jar>("jar") {
 	enabled = false
+}
+
+// Load .env file for bootRun
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+	doFirst {
+		val envFile = rootProject.file(".env")
+		if (envFile.exists()) {
+			envFile.readLines()
+				.filter { it.isNotBlank() && !it.startsWith("#") && it.contains("=") }
+				.forEach { line ->
+					val (key, value) = line.split("=", limit = 2)
+					environment(key.trim(), value.trim())
+				}
+		}
+	}
 }

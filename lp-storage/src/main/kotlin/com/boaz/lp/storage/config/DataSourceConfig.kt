@@ -25,10 +25,11 @@ class DataSourceConfig {
     @Bean
     @Profile("local")
     fun localDataSource(): DataSource {
+        val dbFile = java.io.File("./data/lol-match.db")
+        dbFile.parentFile.mkdirs()
         return DriverManagerDataSource().apply {
             setDriverClassName("org.sqlite.JDBC")
-            url = "jdbc:sqlite:./data/lol-match.db"
-            // SQLite doesn't require username/password
+            url = "jdbc:sqlite:${dbFile.absolutePath}"
         }
     }
 

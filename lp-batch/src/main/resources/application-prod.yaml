@@ -30,6 +30,10 @@ spring:
     init:
       mode: never  # Use Flyway or manual migration in production
 
+  quartz:
+    properties:
+      org.quartz.jobStore.isClustered: true
+
 logging:
   level:
     com.boaz.lp: INFO

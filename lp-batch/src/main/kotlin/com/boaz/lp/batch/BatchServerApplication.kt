@@ -1,21 +1,16 @@
 package com.boaz.lp.batch
 
+import com.boaz.lp.batch.config.RiotApiProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.persistence.autoconfigure.EntityScan
 import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
-/**
- * Batch Server Application
- *
- * Spring Batch jobs for data collection and processing
- * - Riot API data collection
- * - Python ML model inference
- * - Scheduled batch jobs
- *
- * Note: @EnableBatchProcessing and JPA configuration will be added in Phase 2
- */
 @SpringBootApplication(scanBasePackages = ["com.boaz.lp"])
 @EnableScheduling
+@EnableConfigurationProperties(RiotApiProperties::class)
+@EntityScan(basePackages = ["com.boaz.lp.storage.entity"])
 class BatchServerApplication
 
 fun main(args: Array<String>) {
