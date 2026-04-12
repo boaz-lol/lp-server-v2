@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LP Admin - Statistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <th:block th:replace="~{fragments/layout :: sidebar}" th:with="currentPage='statistics'"/>
+
+            <main class="col-md-10 ms-sm-auto px-4 py-4">
+                <th:block th:replace="~{fragments/layout :: header}" th:with="pageTitle='통계'"/>
+
+                <!-- Hourly Stats -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">시간대별 통계</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>시간대</th>
+                                    <th>전체</th>
+                                    <th>성공</th>
+                                    <th>실패</th>
+                                    <th>평균 소요시간(초)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="stat : ${hourlyStats}">
+                                    <td th:text="${stat.timeBucket}"></td>
+                                    <td th:text="${stat.totalCount}"></td>
+                                    <td class="table-status-completed" th:text="${stat.completedCount}"></td>
+                                    <td class="table-status-failed" th:text="${stat.failedCount}"></td>
+                                    <td th:text="${stat.avgDurationSeconds != null} ? ${#numbers.formatDecimal(stat.avgDurationSeconds, 1, 1)} : '-'"></td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(hourlyStats)}">
+                                    <td colspan="5" class="text-center text-muted py-4">No data available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Daily Stats -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">일별 통계 (최근 30일)</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>전체</th>
+                                    <th>성공</th>
+                                    <th>실패</th>
+                                    <th>평균 소요시간(초)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="stat : ${dailyStats}">
+                                    <td th:text="${stat.timeBucket}"></td>
+                                    <td th:text="${stat.totalCount}"></td>
+                                    <td class="table-status-completed" th:text="${stat.completedCount}"></td>
+                                    <td class="table-status-failed" th:text="${stat.failedCount}"></td>
+                                    <td th:text="${stat.avgDurationSeconds != null} ? ${#numbers.formatDecimal(stat.avgDurationSeconds, 1, 1)} : '-'"></td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(dailyStats)}">
+                                    <td colspan="5" class="text-center text-muted py-4">No data available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
