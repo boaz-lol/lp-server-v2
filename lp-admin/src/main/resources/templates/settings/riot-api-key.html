@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LP Admin - Riot API Key</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <th:block th:replace="~{fragments/layout :: sidebar}" th:with="currentPage='riot-api-key'"/>
+
+            <main class="col-md-10 ms-sm-auto px-4 py-4">
+                <th:block th:replace="~{fragments/layout :: header}" th:with="pageTitle='Riot API Key 설정'"/>
+
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${successMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Current Key -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Current API Key</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">
+                                    <code th:text="${currentKey}">Not configured</code>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Update Form -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Change API Key</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/settings/riot-api-key}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <div class="mb-3">
+                                        <label for="apiKey" class="form-label">New API Key</label>
+                                        <input type="text" class="form-control" id="apiKey" name="apiKey"
+                                               placeholder="RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" required>
+                                        <div class="form-text">Riot Developer Portal에서 발급받은 API Key를 입력하세요.</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">변경</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">안내</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="mb-0">
+                                    <li>API Key를 변경하면 DB에 저장되고, 배치 서버에 즉시 반영됩니다.</li>
+                                    <li>배치 서버에 연결할 수 없는 경우 DB에만 저장되며 에러 메시지가 표시됩니다.</li>
+                                    <li>Riot API Key는 24시간마다 갱신이 필요합니다 (Development Key 기준).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

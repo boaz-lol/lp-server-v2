@@ -43,6 +43,9 @@ management:
     readinessState:
       enabled: true
 
+batch:
+  internal-key: ${BATCH_INTERNAL_KEY:batch-internal-secret-key}
+
 # Python model URL (will be overridden in Docker)
 python:
   model:
