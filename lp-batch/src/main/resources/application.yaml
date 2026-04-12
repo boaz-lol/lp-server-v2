@@ -13,7 +13,7 @@ spring:
     show-sql: true
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
     job:
       enabled: false  # Don't run jobs on startup automatically
   quartz:

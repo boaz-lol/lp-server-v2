@@ -162,14 +162,14 @@ class BatchStatisticsService(
     fun getHourlyStats(): List<TimeStatDto> {
         val sql = """
             SELECT
-                FORMATDATETIME(START_TIME, 'HH') as time_bucket,
+                strftime('%H', START_TIME) as time_bucket,
                 COUNT(*) as total,
                 SUM(CASE WHEN STATUS = 'COMPLETED' THEN 1 ELSE 0 END) as completed,
                 SUM(CASE WHEN STATUS = 'FAILED' THEN 1 ELSE 0 END) as failed,
-                AVG(TIMESTAMPDIFF(SECOND, START_TIME, END_TIME)) as avg_duration
+                AVG(CAST((julianday(END_TIME) - julianday(START_TIME)) * 86400 AS INTEGER)) as avg_duration
             FROM BATCH_JOB_EXECUTION
             WHERE START_TIME IS NOT NULL
-            GROUP BY FORMATDATETIME(START_TIME, 'HH')
+            GROUP BY strftime('%H', START_TIME)
             ORDER BY time_bucket
         """.trimIndent()
         return try {
@@ -190,14 +190,14 @@ class BatchStatisticsService(
     fun getDailyStats(): List<TimeStatDto> {
         val sql = """
             SELECT
-                FORMATDATETIME(START_TIME, 'yyyy-MM-dd') as time_bucket,
+                strftime('%Y-%m-%d', START_TIME) as time_bucket,
                 COUNT(*) as total,
                 SUM(CASE WHEN STATUS = 'COMPLETED' THEN 1 ELSE 0 END) as completed,
                 SUM(CASE WHEN STATUS = 'FAILED' THEN 1 ELSE 0 END) as failed,
-                AVG(TIMESTAMPDIFF(SECOND, START_TIME, END_TIME)) as avg_duration
+                AVG(CAST((julianday(END_TIME) - julianday(START_TIME)) * 86400 AS INTEGER)) as avg_duration
             FROM BATCH_JOB_EXECUTION
             WHERE START_TIME IS NOT NULL
-            GROUP BY FORMATDATETIME(START_TIME, 'yyyy-MM-dd')
+            GROUP BY strftime('%Y-%m-%d', START_TIME)
             ORDER BY time_bucket DESC
             LIMIT 30
         """.trimIndent()
