@@ -18,7 +18,7 @@ dependencies {
 	implementation(project(":lp-common"))
 
 	// Spring Data JPA
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	api("org.springframework.boot:spring-boot-starter-data-jpa")
 
 	// Database drivers
 	runtimeOnly("com.h2database:h2") // For testing

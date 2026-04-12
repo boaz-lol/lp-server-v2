@@ -11,6 +11,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  thymeleaf:
+    cache: false
 
 management:
   endpoints:
@@ -23,7 +25,11 @@ management:
     readinessState:
       enabled: true
 
-# Admin credentials (will be overridden by environment variables)
 admin:
-  username: admin
-  password: admin123
+  username: ${ADMIN_USERNAME:admin}
+  password: ${ADMIN_PASSWORD:admin1234}
+
+batch:
+  server:
+    url: ${BATCH_SERVER_URL:http://localhost:8082}
+    internal-key: ${BATCH_INTERNAL_KEY:batch-internal-secret-key}

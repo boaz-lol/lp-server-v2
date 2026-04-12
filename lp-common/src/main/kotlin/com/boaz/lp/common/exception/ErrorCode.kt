@@ -37,7 +37,16 @@ enum class ErrorCode(
 
     // Database errors (6xxx)
     DATABASE_ERROR("6001", "Database error", 500),
-    DATA_INTEGRITY_ERROR("6002", "Data integrity error", 409);
+    DATA_INTEGRITY_ERROR("6002", "Data integrity error", 409),
+
+    // Auth errors (7xxx)
+    INVALID_TOKEN("7001", "Invalid token", 401),
+    EXPIRED_TOKEN("7002", "Token has expired", 401),
+    TOKEN_NOT_FOUND("7003", "Token not found", 401),
+    MEMBER_NOT_FOUND("7004", "Member not found", 404),
+    MEMBER_BANNED("7005", "Member is banned", 403),
+    ADMIN_REQUIRED("7006", "Admin role required", 403),
+    OAUTH2_LOGIN_FAILED("7007", "OAuth2 login failed", 401);
 
     companion object {
         fun fromCode(code: String): ErrorCode? {

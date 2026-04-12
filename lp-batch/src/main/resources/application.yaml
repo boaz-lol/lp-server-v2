@@ -13,7 +13,7 @@ spring:
     show-sql: true
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
     job:
       enabled: false  # Don't run jobs on startup automatically
   quartz:
@@ -42,6 +42,9 @@ management:
       enabled: true
     readinessState:
       enabled: true
+
+batch:
+  internal-key: ${BATCH_INTERNAL_KEY:batch-internal-secret-key}
 
 # Python model URL (will be overridden in Docker)
 python:
