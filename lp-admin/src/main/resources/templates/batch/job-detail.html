@@ -17,6 +17,8 @@
 
                 <a th:href="@{/batch/jobs}" class="btn btn-outline-secondary btn-sm mb-3">Back to List</a>
 
+                <div th:if="${dbError}" class="alert alert-warning" th:text="${dbError}"></div>
+                <th:block th:unless="${dbError}">
                 <!-- Job Info -->
                 <div class="card mb-4">
                     <div class="card-header">
@@ -101,6 +103,7 @@
                         </table>
                     </div>
                 </div>
+                </th:block>
             </main>
         </div>
     </div>

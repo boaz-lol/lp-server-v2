@@ -15,6 +15,8 @@
             <main class="col-md-10 ms-sm-auto px-4 py-4">
                 <th:block th:replace="~{fragments/layout :: header}" th:with="pageTitle='실패 건 목록'"/>
 
+                <div th:if="${dbError}" class="alert alert-warning" th:text="${dbError}"></div>
+                <th:block th:unless="${dbError}">
                 <div class="card">
                     <div class="card-body p-0">
                         <table class="table table-hover mb-0">
@@ -51,6 +53,7 @@
                         </table>
                     </div>
                 </div>
+                </th:block>
             </main>
         </div>
     </div>
