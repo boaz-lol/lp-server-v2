@@ -1,0 +1,52 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    min-height: 100vh;
+    background-color: #212529;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0.75rem 1rem;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link i {
+    margin-right: 0.5rem;
+}
+
+.stat-card {
+    border: none;
+    border-radius: 0.5rem;
+    transition: transform 0.15s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+}
+
+.table-status-completed {
+    color: #198754;
+}
+
+.table-status-failed {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.table-status-started,
+.table-status-starting {
+    color: #0d6efd;
+}
