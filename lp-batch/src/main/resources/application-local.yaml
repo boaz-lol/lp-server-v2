@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:./data/lol-match.db
+    url: jdbc:sqlite:${user.dir}/data/lol-match.db
     # SQLite doesn't require username/password
 
   jpa:
