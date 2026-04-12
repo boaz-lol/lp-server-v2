@@ -24,6 +24,15 @@ dependencies {
 	// Spring Security (stronger security for admin)
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
+	// Thymeleaf (SSR templates)
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+	// WebFlux (WebClient for batch server calls)
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+	// JDBC (Spring Batch meta-table queries)
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
 	// Validation
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
